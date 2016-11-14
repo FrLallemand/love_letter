@@ -43,4 +43,24 @@ $app->get('/chemin/{name}', function($request, $response, $args){
 	]);
 });
 
+$app->get('/creer_partie', function($request, $response, $args){
+	return $this->view->render($response, 'creer_partie.html', [
+	]);
+});
+
+$app->post('/creer_partie', function($request, $response, $args){
+    
+});
+
+$app->get('/partie/{idpartie}', function($request, $response, $args){
+	return $this->view->render($response, 'partie.html', [
+	]);
+});
+
+$app->get('/partie/{idpartie}', function($request, $response, $args){
+	return $this->view->render($response, 'partie.html', [
+	]);
+});
+
+
 $app->run();
