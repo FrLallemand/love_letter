@@ -1,2 +1,3 @@
 vendor/*
 composer.lock
+conf/database.conf.ini
