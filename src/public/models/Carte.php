@@ -7,4 +7,5 @@ class Carte extends \Illuminate\Database\Eloquent\Model{
 	protected $primaryKey = "idcarte";
 	public $timestamps = false;
 }
+
 ?>
