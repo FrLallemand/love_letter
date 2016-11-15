@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  localhost
--- Généré le :  Lun 14 Novembre 2016 à 13:29
+-- Généré le :  Mar 15 Novembre 2016 à 13:03
 -- Version du serveur :  10.1.18-MariaDB
 -- Version de PHP :  5.6.27
 
@@ -23,13 +23,12 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `carte`
+-- Structure de la table `joueur`
 --
 
-CREATE TABLE `carte` (
-  `idcarte` int(11) NOT NULL,
-  `nom` varchar(25) NOT NULL,
-  `description` varchar(500) NOT NULL
+CREATE TABLE `joueur` (
+  `idjoueur` int(11) NOT NULL,
+  `nom` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -39,12 +38,25 @@ CREATE TABLE `carte` (
 --
 
 CREATE TABLE `partie` (
-  `id` int(11) NOT NULL,
-  `Joueur_1` int(11) NOT NULL,
+  `idpartie` int(11) NOT NULL,
+  `joueur_1` int(11) NOT NULL,
   `joueur_2` int(11) NOT NULL,
   `joueur_3` int(11) NOT NULL,
-  `joueur_4` int(11) NOT NULL,
-  `nb_joueurs` int(11) NOT NULL
+  `joueur_4` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `tas`
+--
+
+CREATE TABLE `tas` (
+  `idpartie` int(11) NOT NULL,
+  `proprietaire` int(11) NOT NULL DEFAULT '-1',
+  `nom` varchar(25) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `niveau` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -52,16 +64,42 @@ CREATE TABLE `partie` (
 --
 
 --
--- Index pour la table `carte`
+-- Index pour la table `joueur`
 --
-ALTER TABLE `carte`
-  ADD PRIMARY KEY (`idcarte`);
+ALTER TABLE `joueur`
+  ADD PRIMARY KEY (`idjoueur`);
 
 --
 -- Index pour la table `partie`
 --
 ALTER TABLE `partie`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`idpartie`),
+  ADD KEY `idpartie` (`idpartie`);
+
+--
+-- Index pour la table `tas`
+--
+ALTER TABLE `tas`
+  ADD KEY `idpartie` (`idpartie`);
+
+--
+-- Contraintes pour les tables exportées
+--
+
+--
+-- Contraintes pour la table `partie`
+--
+ALTER TABLE `partie`
+  ADD CONSTRAINT `joueur_1 ` FOREIGN KEY (`idpartie`) REFERENCES `joueur` (`idjoueur`),
+  ADD CONSTRAINT `joueur_2` FOREIGN KEY (`idpartie`) REFERENCES `joueur` (`idjoueur`),
+  ADD CONSTRAINT `joueur_3` FOREIGN KEY (`idpartie`) REFERENCES `joueur` (`idjoueur`),
+  ADD CONSTRAINT `joueur_4` FOREIGN KEY (`idpartie`) REFERENCES `joueur` (`idjoueur`);
+
+--
+-- Contraintes pour la table `tas`
+--
+ALTER TABLE `tas`
+  ADD CONSTRAINT `idpartie` FOREIGN KEY (`idpartie`) REFERENCES `partie` (`idpartie`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
