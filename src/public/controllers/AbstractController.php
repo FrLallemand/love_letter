@@ -3,13 +3,12 @@
 namespace controllers;
 
 use Illuminate\Database\Capsule\Manager as DB;
+use \Interop\Container\ContainerInterface as ContainerInterface;
 
 class AbstractController{
-	public $request;
+	protected $ci;
 
-	public function __construct($req){
-		$this->request = $req;
+	public function __construct(ContainerInterface $ci){
+		$this->ci = $ci;
 	}
 }
-
-?>

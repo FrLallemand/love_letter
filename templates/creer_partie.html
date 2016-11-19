@@ -1,0 +1,10 @@
+<html>
+  <body>
+	<h1>Rejoindre une partie :</h1>
+	<form method="post" action="{{ path_for('creer_partie', { 'user' : ''}) }}">
+	  <label for="user_name">Nom d'utilisateur :</label>
+      <input type="text" name="user" required/><br/>
+      <input type="submit" value="Valider">
+	</form>
+  </body>
+</html>

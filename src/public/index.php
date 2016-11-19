@@ -1,66 +1,24 @@
 <?php
-require '../vendor/autoload.php';
 
+require '../vendor/autoload.php';
+require 'settings.php';
+
+use \Interop\Container\ContainerInterface as ContainerInterface;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-$db = new \Illuminate\Database\Capsule\Manager;
-$db->addConnection(parse_ini_file('../../conf/database.conf.ini'));
+use controllers\Home;
+use controllers\CreationPartie;
+use controllers\GestionPartie;;
 
-$db->setAsGlobal();
-$db->bootEloquent();
 
-$configuration = [
-    'settings' => [
-        'displayErrorDetails' => true,
-    ],
-];
+$app->get('/', '\Home:homeScreen');
 
-$c = new \Slim\Container($configuration);
+$app->get('/creer_partie', '\CreerPartie:formCreerPartie') -> setName('creer_partie');
+$app->post('/creer_partie','\CreerPartie:creerPartie');
 
-$app = new \Slim\App($c);
-
-$container = $app->getContainer();
-
-$container['view'] = function($container){
-	$view = new \Slim\Views\Twig('../../templates', ['cache' => false]);
-
-	$basePath = rtrim(str_ireplace('index.php', '', $container['request']->getUri()->getBasePath()), '/');
-	$view->addExtension(new Slim\Views\TwigExtension($container['router'], $basePath));
-
-	return $view;
-};
-
-$app->get('/', function (Request $request, Response $response) {
-    $response->getBody()->write("plop");
-
-    return $response;
-});
-
-$app->get('/chemin/{name}', function($request, $response, $args){
-	return $this->view->render($response, 'test.html', [
-		'name' => $args['name']
-	]);
-});
-
-$app->get('/creer_partie', function($request, $response, $args){
-	return $this->view->render($response, 'creer_partie.html', [
-	]);
-});
-
-$app->post('/creer_partie', function($request, $response, $args){
-    
-});
-
-$app->get('/partie/{idpartie}', function($request, $response, $args){
-	return $this->view->render($response, 'partie.html', [
-	]);
-});
-
-$app->get('/partie/{idpartie}', function($request, $response, $args){
-	return $this->view->render($response, 'partie.html', [
-	]);
-});
-
+//TODO
+$app->get('/partie/{idpartie}', '\GestionPartie:') -> setName('');
+$app->post('/partie/{idpartie}', '\GestionPartie:');
 
 $app->run();
