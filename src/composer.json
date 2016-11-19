@@ -7,8 +7,9 @@
 	
     "autoload": {
 		"psr-4": {
-	    	"controllers\\": "public/controllers"			
-		},
+	    	"controllers\\": "public/controllers",
+	    	"models\\": "public/models"
+		,}e
 		"files": ["public/settings.php"]
 	}
 }

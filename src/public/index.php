@@ -17,6 +17,12 @@ $app->get('/', '\Home:homeScreen');
 $app->get('/creer_partie', '\CreerPartie:formCreerPartie') -> setName('creer_partie');
 $app->post('/creer_partie','\CreerPartie:creerPartie');
 
+$app->get('/test', function (Request $request, Response $response) {
+    $response->getBody()->write("Plopitiplop");
+
+    return $response;
+});
+
 //TODO
 $app->get('/partie/{idpartie}', '\GestionPartie:') -> setName('');
 $app->post('/partie/{idpartie}', '\GestionPartie:');
