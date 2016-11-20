@@ -13,46 +13,68 @@ class CreationPartie extends AbstractController{
 	}
 
     public function creerPartie($request, $response, $args){
+        //TODO un peu compact...
         $joueurs_maximum = $request->getParam('joueurs_maximum');
         $nom_joueur =  $request->getParam('nom_joueur');
 
+                
+        //on cherche si il y a une partie en attente de joueurs
+        $partie_attente = Partie::where('joueurs_maximum', $joueurs_maximum)
+                        ->whereRaw('joueurs_actuel < joueurs_maximum')                        
+                        ->get()
+                        ->first();
+
+        $id_partie = -1;
+        if($partie_attente == NULL){
+            // Il n'y en a pas, on crée une nouvelle partie
+            $partie = new Partie();
+            $partie->joueurs_maximum = $joueurs_maximum;
+            $partie->save();
+        }else{
+            $partie = $partie_attente;
+        }
+        $id_partie = $partie->idpartie;
+
         //on regarde si le joueur peut prendre ce nom
-        // Pour le moment, la vérification se fait sur l'ensemble des joueurs
-        // Plus tard, peut être le faire uniquement sur la partie ?
-        
-        if(Joueur::where('nom', $nom_joueur)->exists()){
-            $status = 'Nom d\'utilisateur indisponible';
+        // Pour le moment, la vérification se fait sur les joueurs de la partie
+        //TODO idjoueur doit être l'id de session, pour que le joueur ne puisse pas jouer à deux parties en même temps
+        $status_nom = '';
+        if(Joueur::where('nom', $nom_joueur)
+           ->where('idpartie', $id_partie)
+           ->exists()){
+            $status_nom = 'Nom d\'utilisateur indisponible';
         }else{
             //Le nom est libre
             $joueur = new Joueur();
+            $joueur->idpartie = $id_partie;
             $joueur->nom = $nom_joueur;
             $joueur->save();
-            $status = 'ok';
+
+            $partie->joueurs_actuel++;
+            switch($partie->joueurs_actuel){
+            case 1:
+                $partie->joueur_1 = $joueur->idjoueur;
+                break;
+            case 2:
+                $partie->joueur_2 = $joueur->idjoueur;
+                break;
+            case 3:
+                $partie->joueur_3 = $joueur->idjoueur;
+                break;
+            case 4:
+                $partie->joueur_4 = $joueur->idjoueur;
+                break;
+            }
+            
+            $partie->save();
+            $status_nom = '';
         }
-        
-        $response->getBody()->write(json_encode(['response' => $status]));
+
+        $response->getBody()->write(json_encode([
+            'id_partie' => $id_partie,
+            'status_nom' => $status_nom            
+        ]));
         return $response;
-        
-        //on cherche si il y a une partie en attente de joueurs
-        // $partie_attente = Partie::where('joueurs_maximum', $joueurs_maximum)
-        //                 ->where('started', false)->get()->first();
 
-
-
-        
-        // if(empty($partie_attente)){
-        //     // Il n'y en a pas, on crée une nouvelle partie
-        //     $partie = new Partie();
-        //     $partie->joueurs_maximum = $joueurs_maximum;
-        //     $partie->save();
-
-        // }else{
-        //     echo($partie_attente);
-        // }
-
-        //echo($partie_attente);
-        // return $this->ci->view->render($response, 'test.html', [
-        //     'name' => $partie_attente
-        //  ]);
     }
 }
