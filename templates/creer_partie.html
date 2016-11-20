@@ -1,28 +1,26 @@
-<!DOCTYPE html>
-<html>
-  <head>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
-	</script>
-  </head>
-  <body>
-	<h1>Rejoindre une partie :</h1>
-	<div>
-	  <form id="monForm" name="form" method="post" action="{{ path_for('creer_partie', {}) }}">
-		<input type="text" name="nom_joueur" id="nom_joueur" placeholder="Nom" required="true"/><br/>
-		<label id="nom_joueur_erreur" text=""></label>
-		<label id="joueurs_maximum_label" text="Nombre de joueurs :"></label>
-		<select name="joueurs_maximum" id="joueurs_maximum">
-		  <option value="2">2</option>
-		  <option value="3">3</option>
-		  <option value="4">4</option>
-		</select>
-		<input id="submit_form" type="submit" value="Valider">
-	  </form>
-	</div>
-	<script>
-	  $.getScript("js/creer_partie.js", function(){
-	  creer_partie();
-	  });
-	</script>
-  </body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}Bienvenu{% endblock %}
+
+{% block content %}
+<h1>Rejoindre une partie :</h1>
+<div>
+  <form id="monForm" name="form" method="post" action="{{ path_for('creer_partie', {}) }}">
+	<input type="text" name="nom_joueur" id="nom_joueur" placeholder="Nom" required="true"/><br/>
+	<label id="nom_joueur_erreur"></label>
+	<label id="joueurs_maximum_label">Nombre de joueurs :</label>
+	<select name="joueurs_maximum" id="joueurs_maximum">
+	  <option value="2">2</option>
+	  <option value="3">3</option>
+	  <option value="4">4</option>
+	</select><br/>
+	<input id="submit_form" type="submit" value="Valider">
+  </form>
+</div>
+<script>
+  $.getScript("/js/creer_partie.js", function(){
+      creer_partie();
+  });
+</script>
+{% endblock %}
+

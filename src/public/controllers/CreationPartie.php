@@ -14,9 +14,8 @@ class CreationPartie extends AbstractController{
 
     public function creerPartie($request, $response, $args){
         //TODO un peu compact...
-        $joueurs_maximum = $request->getParam('joueurs_maximum');
-        $nom_joueur =  $request->getParam('nom_joueur');
-
+        $joueurs_maximum = $args['joueurs_maximum'];
+        $nom_joueur =  $args['nom_joueur'];
                 
         //on cherche si il y a une partie en attente de joueurs
         $partie_attente = Partie::where('joueurs_maximum', $joueurs_maximum)
@@ -75,6 +74,5 @@ class CreationPartie extends AbstractController{
             'status_nom' => $status_nom            
         ]));
         return $response;
-
     }
 }

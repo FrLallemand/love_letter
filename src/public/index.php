@@ -15,7 +15,7 @@ use controllers\GestionPartie;;
 $app->get('/', '\Home:homeScreen');
 
 $app->get('/creer_partie', '\CreerPartie:formCreerPartie') -> setName('creer_partie');
-$app->post('/creer_partie','\CreerPartie:creerPartie');
+$app->post('/creer_partie/{joueurs_maximum}+{nom_joueur}','\CreerPartie:creerPartie');
 
 $app->get('/test', function (Request $request, Response $response) {
     $response->getBody()->write("Plopitiplop");
@@ -24,7 +24,10 @@ $app->get('/test', function (Request $request, Response $response) {
 });
 
 //TODO
-$app->get('/partie/{idpartie}', '\GestionPartie:') -> setName('');
-$app->post('/partie/{idpartie}', '\GestionPartie:');
+$app->get('/partie/{idpartie}', '\GestionPartie:waitingRoom') -> setName('');
+$app->post('/partie/{idpartie}', '\GestionPartie:waitingRoom');
+
+$app->get('/partie/{idpartie}/joueurs_max', '\GestionPartie:get_joueurs_max');
+$app->get('/partie/{idpartie}/joueurs_actuel', '\GestionPartie:get_joueurs_actuel');
 
 $app->run();

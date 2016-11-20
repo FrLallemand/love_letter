@@ -1,21 +1,21 @@
 function creer_partie() {
 	$(document).ready(function(){
 		$('#monForm').on('submit', function(e) {
-			//Empecje le comportement par défaut
+			//Empeche le comportement par défaut
 			e.preventDefault();
 
 			//recupere les valeurs
 			var joueurs_max = $('#joueurs_maximum').val();
 			var nom_joueur = $('#nom_joueur').val();
-			
 			$.ajax({
-				url : $(this).attr('action'),
-				type: $(this).attr('method'),
-				data: $(this).serialize(),
+				url : window.location.href + "/" + joueurs_max + "+" + nom_joueur,
+				type: 'post',
 				dataType: 'json',
 				success: function(json) {
+					console.log(json);
 					if(json.status_nom === ''){
 						$("#nom_joueur_erreur").text("");
+						window.location.replace('partie/' + json.id_partie);
 					}else{
 						$("#nom_joueur_erreur").text(json.status_nom);
 					}}

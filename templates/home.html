@@ -1,8 +1,6 @@
-<html>
-  <body>
-	<h1>Love letter :</h1>
-	<form methode="get" action="{{ path_for('creer_partie', {}) }}">
-      <input type="submit" value="Rejoindre une partie">
-	</form>
-  </body>
-</html>
+{% block content %}
+<h1>Love letter :</h1>
+<form methode="get" action="{{ path_for('creer_partie', {}) }}">
+  <input type="submit" value="Rejoindre une partie">
+</form>
+{% endblock %}
