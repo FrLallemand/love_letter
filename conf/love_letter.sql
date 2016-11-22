@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  localhost
--- Généré le :  Dim 20 Novembre 2016 à 09:33
+-- Généré le :  Mar 22 Novembre 2016 à 09:00
 -- Version du serveur :  10.1.18-MariaDB
 -- Version de PHP :  5.6.27
 
@@ -23,6 +23,18 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `joueur`
+--
+
+CREATE TABLE `joueur` (
+  `idjoueur` int(11) NOT NULL,
+  `nom` varchar(50) NOT NULL,
+  `idpartie` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `partie`
 --
 
@@ -33,12 +45,34 @@ CREATE TABLE `partie` (
   `joueur_3` int(11) NOT NULL,
   `joueur_4` int(11) NOT NULL,
   `joueurs_maximum` int(11) NOT NULL DEFAULT '4',
-  `joueurs_actuel` int(11) NOT NULL DEFAULT '0'
+  `joueurs_actuel` int(11) NOT NULL DEFAULT '0',
+  `updated_at` datetime NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `tas`
+--
+
+CREATE TABLE `tas` (
+  `idpartie` int(11) NOT NULL,
+  `proprietaire` int(11) NOT NULL DEFAULT '-1',
+  `nom` varchar(25) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `niveau` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Index pour les tables exportées
 --
+
+--
+-- Index pour la table `joueur`
+--
+ALTER TABLE `joueur`
+  ADD PRIMARY KEY (`idjoueur`);
 
 --
 -- Index pour la table `partie`
@@ -50,6 +84,11 @@ ALTER TABLE `partie`
 -- AUTO_INCREMENT pour les tables exportées
 --
 
+--
+-- AUTO_INCREMENT pour la table `joueur`
+--
+ALTER TABLE `joueur`
+  MODIFY `idjoueur` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `partie`
 --

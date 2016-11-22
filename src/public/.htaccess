@@ -1,4 +1,12 @@
-RewriteEngine on
+RewriteEngine On
+
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule . index.php [L]
+
+RewriteCond %{THE_REQUEST} ^[^\s]+\s+[^?]*?\?
+RewriteCond %{QUERY_STRING} =""
+# For any version of Apache:
+RewriteRule .? %{REQUEST_URI}? [R=301,L]
+# For Apache 2.4+:
+# RewriteRule .? %{REQUEST_URI} [R=301,L,QSD] 

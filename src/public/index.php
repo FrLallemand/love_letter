@@ -23,11 +23,10 @@ $app->get('/test', function (Request $request, Response $response) {
     return $response;
 });
 
-//TODO
-$app->get('/partie/{idpartie}', '\GestionPartie:waitingRoom') -> setName('');
+$app->get('/partie/{idpartie}', '\GestionPartie:waitingRoom');
 $app->post('/partie/{idpartie}', '\GestionPartie:waitingRoom');
 
-$app->get('/partie/{idpartie}/joueurs_max', '\GestionPartie:get_joueurs_max');
-$app->get('/partie/{idpartie}/joueurs_actuel', '\GestionPartie:get_joueurs_actuel');
+$app->post('/partie/{idpartie}/joueurs_max', '\GestionPartie:get_joueurs_max');
+$app->post('/partie/{idpartie}/joueurs_actuel/{timestamp}', '\GestionPartie:get_joueurs_actuel');
 
 $app->run();

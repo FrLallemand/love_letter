@@ -1,7 +1,7 @@
 <?php
 
 namespace controllers;
-
+use Carbon\Carbon;
 use models\Partie as Partie;
 use models\Joueur as Joueur;
     
@@ -13,6 +13,7 @@ class CreationPartie extends AbstractController{
 	}
 
     public function creerPartie($request, $response, $args){
+        date_default_timezone_set('Europe/Paris');
         //TODO un peu compact...
         $joueurs_maximum = $args['joueurs_maximum'];
         $nom_joueur =  $args['nom_joueur'];
@@ -64,14 +65,13 @@ class CreationPartie extends AbstractController{
                 $partie->joueur_4 = $joueur->idjoueur;
                 break;
             }
-            
             $partie->save();
             $status_nom = '';
         }
 
         $response->getBody()->write(json_encode([
             'id_partie' => $id_partie,
-            'status_nom' => $status_nom            
+            'status_nom' =>$status_nom        
         ]));
         return $response;
     }
