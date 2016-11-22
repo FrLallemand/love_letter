@@ -5,6 +5,8 @@ $db->addConnection(parse_ini_file('../../conf/database.conf.ini'));
 $db->setAsGlobal();
 $db->bootEloquent();
 
+date_default_timezone_set('Europe/Paris');
+
 $configuration = [
     'settings' => [
         'displayErrorDetails' => true,

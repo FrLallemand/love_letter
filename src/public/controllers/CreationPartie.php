@@ -13,7 +13,6 @@ class CreationPartie extends AbstractController{
 	}
 
     public function creerPartie($request, $response, $args){
-        date_default_timezone_set('Europe/Paris');
         //TODO un peu compact...
         $joueurs_maximum = $args['joueurs_maximum'];
         $nom_joueur =  $args['nom_joueur'];
