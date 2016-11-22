@@ -44,38 +44,9 @@ class GestionPartie extends AbstractController{
                 ]));
                 return $response;
             }else{
-                sleep( 5 );
+                sleep(1);
                 continue;
             }
         }
-
-        // while(true){
-        //     $last_ajax_call = isset($timestamp) ? (int)$timestamp : null;
-        //     clearstatcache();
-            
-        //     $updated_at = $partie->updated_at->format('y-m-d H:i:s');
-
-        //     if ($last_ajax_call == null || $updated_at > $last_ajax_call) {
-
-        //         $response->getBody()->write(json_encode([
-        //             'joueurs_actuel' => $last_ajax_call,//$partie->joueurs_actuel,
-        //             'timestamp' => $updated_at
-        //         ]));
-        //         return $response;
-        //     } else {
-        //         sleep( 10 );
-        //         continue;
-        //     }
-        // }
-
-        // $joueurs_actuel = Partie::where('idpartie', $id_partie)
-        //              ->first()
-        //              ->joueurs_actuel;
-
-        // $response->getBody()->write(json_encode([
-        //     'joueurs_actuel' => $joueurs_actuel            
-        // ]));
-        // return $response;
 	}
-
 }
