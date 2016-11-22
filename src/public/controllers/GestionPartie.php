@@ -1,4 +1,4 @@
-hh<?php
+<?php
 
 namespace controllers;
 
@@ -39,7 +39,7 @@ class GestionPartie extends AbstractController{
 
             if ($last_ajax_call == null || $last_change_in_data > $last_ajax_call) {
                 $response->getBody()->write(json_encode([
-                    'joueurs_actuel' => $last_ajax_call,//$partie->joueurs_actuel,
+                    'joueurs_actuel' => $partie->joueurs_actuel,
                     'timestamp' => $partie->updated_at->format('y-m-d h:i:s')
                 ]));
                 return $response;
