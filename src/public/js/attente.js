@@ -19,3 +19,8 @@ function attente(timestamp) {
 		});
 	});
 }
+
+
+$(function() {
+    attente();
+});

@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block head %}
+<script type="text/javascript" src="/js/creer_partie.js"></script>
+{% endblock %}
+
 {% block title %}Bienvenu{% endblock %}
 
 {% block content %}
@@ -17,10 +21,5 @@
 	<input id="submit_form" type="submit" value="Valider">
   </form>
 </div>
-<script>
-  $.getScript("/js/creer_partie.js", function(){
-      creer_partie();
-  });
-</script>
 {% endblock %}
 

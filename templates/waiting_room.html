@@ -1,18 +1,17 @@
 {% extends "base.html" %}
 
+{% block head %}
+<script type="text/javascript" src="/js/attente.js"></script>
+{% endblock %}
+
 {% block title %}Attente de joueurs{% endblock %}
 
 {% block content %}
 <h1>En attente d'autres joueurs :</h1>
 <div>
-	<label id="joueurs_label">Nombre de joueurs :</label>
-	<label id="joueurs_compteur_label"></label>
+  <label id="joueurs_label">Nombre de joueurs :</label>
+  <label id="joueurs_compteur_label"></label>
 </div>
-<script>
-  $.getScript("/js/attente.js", function(){
-      attente();
-  });
-</script>
 
 {% endblock %}
 

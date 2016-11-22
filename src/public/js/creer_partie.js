@@ -23,3 +23,8 @@ function creer_partie() {
 		});
 	});
 }
+
+
+$(function() {
+    creer_partie();
+});
