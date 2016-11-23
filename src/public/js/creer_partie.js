@@ -14,7 +14,7 @@ function creer_partie() {
 				success: function(json) {
 					if(json.status_nom === ''){
 						$("#nom_joueur_erreur").text("");
-						window.location.replace('partie/' + json.id_partie);
+						window.location.replace('partie/' + json.id_partie );
 					}else{
 						$("#nom_joueur_erreur").text(json.status_nom);
 					}}

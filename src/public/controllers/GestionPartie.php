@@ -25,7 +25,6 @@ class GestionPartie extends AbstractController{
 
     public function get_joueurs_actuel($request, $response, $args){
         $id_partie = $args['idpartie'];
-        date_default_timezone_set('Europe/Paris');
         while(true){
             $partie = Partie::where('idpartie', $id_partie)
                     ->first();
