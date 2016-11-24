@@ -15,7 +15,7 @@ function creer_partie() {
 					if(json.status_nom === ''){
 						$("#nom_joueur_erreur").text("");
 						console.log("mlmpo");
-						//window.location.replace('partie/attente');
+						window.location.replace('/partie/attente');
 					}else{
 						$("#nom_joueur_erreur").text(json.status_nom);
 					}}

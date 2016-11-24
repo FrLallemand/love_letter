@@ -27,9 +27,12 @@ $app->get('/partie/attente', '\GestionPartie:waitingRoom');
 $app->post('/partie/attente', '\GestionPartie:waitingRoom');
 
 $app->get('/partie/plateau', '\GestionPartie:creer_plateau');
-
+$app->get('/partie/pioche_carte', '\GestionPartie:pioche_carte');
 $app->get('/partie/joueurs_max', '\GestionPartie:get_joueurs_max');
 $app->get('/partie/joueurs_actuel/{timestamp}', '\GestionPartie:get_joueurs_actuel');
+//$app->get('/partie/tour_de', '\GestionPartie:get_tour_de');
+$app->get('/partie/mon_tour', '\GestionPartie:get_mon_tour');
+$app->get('/partie/mes_cartes', '\GestionPartie:get_mes_cartes');
 
 $app->get('/joueur/get_partie', '\GestionJoueur:get_partie');
 

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block head %}
+<script type="text/javascript" src="/js/plateau.js"></script>
+{% endblock %}
+
+{% block title %}Attente de joueurs{% endblock %}
+
+{% block content %}
+Cartes :</br>
+
+<h1>Cartes jouées :</h1>
+<div id="cartes_jouees">
+  
+</div>
+
+<h1>Main :</h1>
+<div id="mes_cartes">
+  <img id="carte_1" src="/images/Vide.jpg">   
+  <img id="carte_2" src="/images/Vide.jpg"> 
+</div>
+<h1>Cartes éliminées :</h1>
+<div id="cartes_eliminees"></div>
+<h1>Pioche :</h1>
+<div id="pioche"></div>
+<input id="pioche_carte" type="submit" value="Piocher une carte" onclick="pioche_carte();" disabled="true">
+
+{% endblock %}
+

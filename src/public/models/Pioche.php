@@ -4,6 +4,7 @@ namespace models;
 
 class Pioche extends \Illuminate\Database\Eloquent\Model{
 	protected $table = "pioche";
+	protected $primaryKey = "idpioche";
 	public $timestamps = false;
 
     public function setPioche($cartes){
