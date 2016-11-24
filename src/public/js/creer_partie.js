@@ -8,13 +8,14 @@ function creer_partie() {
 			var joueurs_max = $('#joueurs_maximum').val();
 			var nom_joueur = $('#nom_joueur').val();
 			$.ajax({
-				url : window.location.href + "/" + joueurs_max + "+" + nom_joueur,
+				url : "/creer_partie/" + joueurs_max + "+" + nom_joueur,
 				type: 'post',
 				dataType: 'json',
 				success: function(json) {
 					if(json.status_nom === ''){
 						$("#nom_joueur_erreur").text("");
-						window.location.replace('partie/' + json.id_partie );
+						console.log("mlmpo");
+						//window.location.replace('partie/attente');
 					}else{
 						$("#nom_joueur_erreur").text(json.status_nom);
 					}}

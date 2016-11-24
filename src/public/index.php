@@ -1,5 +1,4 @@
 <?php
-
 require '../vendor/autoload.php';
 require 'settings.php';
 
@@ -10,6 +9,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 use controllers\Home;
 use controllers\CreationPartie;
 use controllers\GestionPartie;;
+use controllers\GestionJoueur;;
 
 
 $app->get('/', '\Home:homeScreen');
@@ -23,10 +23,14 @@ $app->get('/test', function (Request $request, Response $response) {
     return $response;
 });
 
-$app->get('/partie/{idpartie}', '\GestionPartie:waitingRoom');
-$app->post('/partie/{idpartie}', '\GestionPartie:waitingRoom');
+$app->get('/partie/attente', '\GestionPartie:waitingRoom');
+$app->post('/partie/attente', '\GestionPartie:waitingRoom');
 
-$app->post('/partie/{idpartie}/joueurs_max', '\GestionPartie:get_joueurs_max');
-$app->post('/partie/{idpartie}/joueurs_actuel/{timestamp}', '\GestionPartie:get_joueurs_actuel');
+$app->get('/partie/plateau', '\GestionPartie:creer_plateau');
+
+$app->get('/partie/joueurs_max', '\GestionPartie:get_joueurs_max');
+$app->get('/partie/joueurs_actuel/{timestamp}', '\GestionPartie:get_joueurs_actuel');
+
+$app->get('/joueur/get_partie', '\GestionJoueur:get_partie');
 
 $app->run();

@@ -38,4 +38,7 @@ $container['\CreerPartie'] = function ($c) {
 $container['\GestionPartie'] = function ($c) {
  	return new \controllers\GestionPartie($c);
 };
+$container['\GestionJoueur'] = function ($c) {
+ 	return new \controllers\GestionJoueur($c);
+};
 

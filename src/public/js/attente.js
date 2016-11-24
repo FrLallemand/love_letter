@@ -1,21 +1,21 @@
 function attente(timestamp) {
 	$.when(		
 		$.ajax({
-			url : window.location.href + "/joueurs_max",
-			type: 'post',
+			url : "/partie/joueurs_max",
+			type: 'get',
 			dataType: 'json'
 		})
 	).done(function(r1){
 		$.ajax({
-			url : window.location.href + "/joueurs_actuel/" + timestamp,
-			type: 'post',
+			url : "/partie/joueurs_actuel/" + timestamp,
+			type: 'get',
 			dataType: 'json',
 			success: function(json) {
-				$("#joueurs_compteur_label").text(json.joueurs_actuel + "/" + r1.joueurs_max);	
+				$("#joueurs_compteur_label").text(json.joueurs_actuel + "/" + r1.joueurs_max);
 				if(json.joueurs_actuel < r1.joueurs_max){
 					attente(json.timestamp);
 				}else{
-					//window.location.replace('partie/' + json.id_partie);
+					window.location.replace('partie/plateau');
 				}
 			}
 		});
