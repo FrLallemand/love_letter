@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  localhost
--- Généré le :  Jeu 24 Novembre 2016 à 09:48
+-- Généré le :  Mar 29 Novembre 2016 à 18:39
 -- Version du serveur :  10.1.19-MariaDB
 -- Version de PHP :  7.0.13
 
@@ -28,11 +28,13 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `carte` (
   `idcarte` int(11) NOT NULL,
-  `proprietaire` int(11) NOT NULL DEFAULT '-1',
-  `nom` varchar(25) NOT NULL,
-  `description` varchar(500) NOT NULL,
-  `niveau` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `proprietaire` int(11) NOT NULL,
+  `nom` varchar(50) NOT NULL,
+  `description` varchar(150) NOT NULL,
+  `niveau` int(11) NOT NULL,
+  `visible` tinyint(1) NOT NULL DEFAULT '0',
+  `chemin_image` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -43,7 +45,11 @@ CREATE TABLE `carte` (
 CREATE TABLE `joueur` (
   `idjoueur` int(11) NOT NULL,
   `nom` varchar(50) NOT NULL,
-  `idpartie` int(11) DEFAULT NULL
+  `idpartie` int(11) DEFAULT NULL,
+  `actions` text NOT NULL,
+  `notifications` text NOT NULL,
+  `elimine` tinyint(1) NOT NULL DEFAULT '0',
+  `invulnerable` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -54,16 +60,16 @@ CREATE TABLE `joueur` (
 
 CREATE TABLE `partie` (
   `idpartie` int(11) NOT NULL,
-  `joueur_1` int(11) NOT NULL,
-  `joueur_2` int(11) NOT NULL,
-  `joueur_3` int(11) NOT NULL,
-  `joueur_4` int(11) NOT NULL,
-  `joueurs_maximum` int(11) NOT NULL DEFAULT '4',
-  `joueurs_actuel` int(11) NOT NULL DEFAULT '0',
+  `joueurs` text NOT NULL,
+  `joueur_actuel` int(11) NOT NULL,
+  `tour_actuel` int(11) NOT NULL DEFAULT '1',
+  `joueurs_presents` int(11) NOT NULL,
+  `joueurs_maximum` int(11) NOT NULL,
   `updated_at` datetime NOT NULL,
   `created_at` datetime NOT NULL,
-  `tour_de` int(11) NOT NULL DEFAULT '-1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `pioche` int(11) NOT NULL,
+  `finie` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -72,7 +78,8 @@ CREATE TABLE `partie` (
 --
 
 CREATE TABLE `pioche` (
-  `idpartie` int(11) NOT NULL,
+  `idpioche` int(11) NOT NULL,
+  `haut` int(11) NOT NULL DEFAULT '1',
   `carte_1` int(11) NOT NULL DEFAULT '-1',
   `carte_2` int(11) NOT NULL DEFAULT '-1',
   `carte_3` int(11) NOT NULL DEFAULT '-1',
@@ -117,7 +124,7 @@ ALTER TABLE `partie`
 -- Index pour la table `pioche`
 --
 ALTER TABLE `pioche`
-  ADD UNIQUE KEY `idpartie` (`idpartie`);
+  ADD PRIMARY KEY (`idpioche`);
 
 --
 -- AUTO_INCREMENT pour les tables exportées
@@ -132,12 +139,20 @@ ALTER TABLE `carte`
 -- AUTO_INCREMENT pour la table `joueur`
 --
 ALTER TABLE `joueur`
-  MODIFY `idjoueur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `idjoueur` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT pour la table `partie`
 --
 ALTER TABLE `partie`
-  MODIFY `idpartie` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `idpartie` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `pioche`
+--
+ALTER TABLE `pioche`
+  MODIFY `idpioche` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+"{\"source\":\"utilisation_baron\",\"content\":{\"joueur_source\":\"kh\",\"cartes_joueur\":[\"\\\/images\\\/Garde.jpg\"],\"niveau_joueur\":1,\"cartes_adversaire\":[\"\\\/images\\\/Garde.jpg\"],\"niveau_adversaire\":1,\"message\":\"\\u00c9galit\\u00e9\"}}"
+
+["source\":\"utilisation_baron\",\"content\":{\"joueur_source\":\"kh\",\"cartes_joueur\":[\"\\\/images\\\/Garde.jpg\"],\"niveau_joueur\":1,\"cartes_adversaire\":[\"\\\/images\\\/Garde.jpg\"],\"niveau_adversaire\":1,\"message\":\"\\u00c9galit\\u00e9\"}"]

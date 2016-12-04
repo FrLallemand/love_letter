@@ -11,4 +11,18 @@ class AbstractController{
 	public function __construct(ContainerInterface $ci){
 		$this->ci = $ci;
 	}
+
+    protected function handle_session(){
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+    }
+
+    protected function check_session(){
+        $result = false;
+        if(isset($_SESSION['idjoueur']) && isset($_SESSION['idpartie'])){
+            $result = true;
+        }
+        return $result;
+    }
 }

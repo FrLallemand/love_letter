@@ -1,29 +1,283 @@
 {% extends "base.html" %}
 
 {% block head %}
-<script type="text/javascript" src="/js/plateau.js"></script>
 {% endblock %}
 
-{% block title %}Attente de joueurs{% endblock %}
+{% block title %}Plateau{% endblock %}
 
 {% block content %}
-Cartes :</br>
 
-<h1>Cartes jouées :</h1>
-<div id="cartes_jouees">
-  
+<div class="text-center">
+  <h4><label id="joueur_actuel_label"></label></h4>
 </div>
 
-<h1>Main :</h1>
-<div id="mes_cartes">
-  <img id="carte_1" src="/images/Vide.jpg">   
-  <img id="carte_2" src="/images/Vide.jpg"> 
+<div class="container">
+  <label>Adversaires:</label>
+  <div id="row_adversaires" class="row">
+  </div>
 </div>
-<h1>Cartes éliminées :</h1>
-<div id="cartes_eliminees"></div>
-<h1>Pioche :</h1>
-<div id="pioche"></div>
-<input id="pioche_carte" type="submit" value="Piocher une carte" onclick="pioche_carte();" disabled="true">
+
+<div id="cartes_jouees" class="jumbotron">
+  <div class="container">
+	<div class="row">
+      <div class="col-md-12">
+		<div id="mes_cartes">
+		  <label>Cartes jouées :</label>
+		  <div id="cartes_jouees_container">
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+	  <div id="mes_cartes">
+		<label>Main:</label><label id="jouer_carte_label"></label>
+		<div id="mes_cartes_container">
+		</div>
+	  </div>
+	</div>
+	<div class="col-md-4">
+	  <div id="pioche">
+		<label>Actions :</label>
+		<button id="jouer_carte" type="button" class="btn btn-default">Jouer</button>
+		<button id="pioche_carte" type="button" class="btn btn-default">Piocher une carte</button>
+	  </div>
+	</div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+	  <div id="cartes_eliminees">
+		<label>Cartes éliminées :</label>
+		<div id="cartes_eliminees_container">
+		</div>
+	  </div>
+	</div>
+  </div>
+</div>
+
+<div id="modal_action_garde" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+        <h4 class="modal-title text-center">Garde</h4>
+		<label class="text-center" id="feedback"></label>
+	  </div>
+	  <div class="modal-body">
+		<label for="joueur">Selectionnez un joueur : </label>
+		<div class="radio" id="joueurs">
+		</div>
+		<label for="carte">Selectionnez une carte : </label>
+		<div class="radio" id="cartes">
+		  <label class="radio-inline"><input type="radio" name="cartes" value="Prêtre">Prêtre</label>
+		  <label class="radio-inline"><input type="radio" name="cartes" value="Baron">Baron</label>
+		  <label class="radio-inline"><input type="radio" name="cartes" value="Servante">Servante</label>
+		  <label class="radio-inline"><input type="radio" name="cartes" value="Prince">Prince</label>
+		  <label class="radio-inline"><input type="radio" name="cartes" value="Roi">Roi</label>
+		  <label class="radio-inline"><input type="radio" name="cartes" value="Comtesse">Comtesse</label>
+		  <label class="radio-inline"><input type="radio" name="cartes" value="Princesse">Princesse</label>
+		</div>
+	  </div>
+	  <div class="modal-footer">
+		<button id="fermer" type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+        <button id="button" type="button" class="btn btn-default" >Ok</button>
+	  </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal_action_pretre" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+        <h4 class="modal-title text-center">Prêtre</h4>
+		<label class="text-center" id="feedback"></label>
+	  </div>
+	  <div class="modal-body">
+		<label for="joueur">Selectionnez un joueur : </label>
+		<div class="radio" id="joueurs">
+		</div>
+		<div id="cartes" class="text-center">
+		</div>
+	  </div>
+	  <div class="modal-footer">
+		<button id="fermer" type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+        <button id="button" type="button" class="btn btn-default" >Ok</button>
+	  </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal_action_baron" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+        <h4 class="modal-title text-center">Baron</h4>
+		<label class="text-center" id="feedback"></label>
+	  </div>
+	  <div class="modal-body">
+		<div id="zone_joueurs">
+		  <label for="joueur">Selectionnez un joueur : </label>
+		  <div class="radio" id="joueurs"></div>
+		</div>
+		<label id="mes_cartes">Mes cartes : </label>
+		<div id="cartes_joueur" class="text-center">
+		</div>
+		<label id="ses_cartes">Ses cartes : </label>
+		<div id="cartes_adversaire" class="text-center">
+		</div>
+	  </div>
+	  <div class="modal-footer">
+		<button id="fermer" type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+        <button id="button" type="button" class="btn btn-default" >Ok</button>
+	  </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal_action_prince" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+        <h4 class="modal-title text-center">Prince</h4>
+		<label class="text-center" id="feedback"></label>
+	  </div>
+	  <div class="modal-body">
+		<div id="zone_joueurs">
+		  <label for="joueur">Selectionnez un joueur : </label>
+		  <div class="radio" id="joueurs"></div>
+		</div>
+	  </div>
+	  <div class="modal-footer">
+		<button id="fermer" type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+        <button id="button" type="button" class="btn btn-default" >Ok</button>
+	  </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal_action_roi" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+        <h4 class="modal-title text-center">Roi</h4>
+		<label class="text-center" id="feedback"></label>
+	  </div>
+	  <div class="modal-body">
+		<div id="zone_joueurs">
+		  <label for="joueur">Selectionnez un joueur : </label>
+		  <div class="radio" id="joueurs"></div>
+		</div>
+	  </div>
+	  <div class="modal-footer">
+		<button id="fermer" type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+		<button id="button" type="button" class="btn btn-default" >Ok</button>
+	  </div>
+	</div>
+  </div>
+</div>
+
+<div id="modal_notification_baron" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<h4 class="modal-title text-center">Baron</h4>
+		<label class="text-center" id="feedback"></label>
+	  </div>
+	  <div class="modal-body">
+		<label id="message"></label>
+		<div>
+		  <label id="mes_cartes">Mes cartes : </label>
+		  <div id="cartes_joueur" class="text-center"></div>
+		  <label id="ses_cartes">Ses cartes : </label>
+		  <div id="cartes_adversaire" class="text-center"></div>
+		</div>
+	  </div>
+	  <div class="modal-footer">
+		<button id="fermer" type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+	  </div>
+	</div>
+  </div>
+</div>
+
+<div id="modal_notification_prince" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<h4 class="modal-title text-center">Prince</h4>
+		<label class="text-center" id="feedback"></label>
+	  </div>
+	  <div class="modal-body">
+		<label id="message"></label>
+	  </div>
+	  <div class="modal-footer">
+		<button id="fermer" type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+	  </div>
+	</div>
+  </div>
+</div>
+
+<div id="modal_notification_roi" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<h4 class="modal-title text-center">Roi</h4>
+		<label class="text-center" id="feedback"></label>
+	  </div>
+	  <div class="modal-body">
+		<label id="message"></label>
+	  </div>
+	  <div class="modal-footer">
+		<button id="fermer" type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+	  </div>
+	</div>
+  </div>
+</div>
+
+<div id="modal_notification_fin" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<h4 class="modal-title text-center">Fin de la manche</h4>
+		<label class="text-center" id="feedback"></label>
+	  </div>
+	  <div class="modal-body">
+		<label id="message"></label>
+	  </div>
+	  <div class="modal-footer">
+		<button id="fermer" type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+	  </div>
+	</div>
+  </div>
+</div>
+
+<div id="elimination" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+		<h4 class="modal-title text-center">Perdu !</h4>
+		<label class="text-center" id="feedback"></label>
+	  </div>
+	  <div class="modal-body">
+		<div id="elimination_texte" class="text-center">
+		</div>
+	  </div>
+	  <div class="modal-footer">
+		<button id="elimination_fermer" type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+	  </div>
+	</div>
+  </div>
+</div>
 
 {% endblock %}
 
+{% block javascript %}
+<link rel="stylesheet" href="/css/plateau.css" type="text/css">
+<script type="text/javascript" src="/js/plateau.js"></script>
+{% endblock %}

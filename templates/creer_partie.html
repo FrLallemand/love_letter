@@ -1,25 +1,36 @@
 {% extends "base.html" %}
 
 {% block head %}
-<script type="text/javascript" src="/js/creer_partie.js"></script>
 {% endblock %}
 
-{% block title %}Bienvenu{% endblock %}
+{% block title %}Bienvenue{% endblock %}
 
 {% block content %}
-<h1>Rejoindre une partie :</h1>
-<div>
-  <form id="monForm" name="form" method="post" action="{{ path_for('creer_partie', {}) }}">
-	<input type="text" name="nom_joueur" id="nom_joueur" placeholder="Nom" required="true"/><br/>
-	<label id="nom_joueur_erreur"></label>
-	<label id="joueurs_maximum_label">Nombre de joueurs :</label>
-	<select name="joueurs_maximum" id="joueurs_maximum">
-	  <option value="2">2</option>
-	  <option value="3">3</option>
-	  <option value="4">4</option>
-	</select><br/>
-	<input id="submit_form" type="submit" value="Valider">
-  </form>
+<div class="container">
+  <h1>Rejoindre une partie :</h1>
+  <div>
+	<form id="monForm" name="form" method="post" action="{{ path_for('creer_partie', {}) }}">
+	  <div class="form-group">
+		<label for="nom_joueur">Nom:</label>
+		<input class="form-control" type="text" name="nom_joueur" id="nom_joueur" placeholder="Nom" required="true"/>
+		<label id="nom_joueur_erreur"></label>
+	  </div>
+	  <div class="form-group">
+		<label for="joueurs_maximum" id="joueurs_maximum_label">Nombre de joueurs :</label>
+		<select class="form-control" name="joueurs_maximum" id="joueurs_maximum">
+		  <option value="2">2</option>
+		  <option value="3">3</option>
+		  <option value="4">4</option>
+		</select>
+	  </div>
+	  <div class="form-group">
+		<input class="form-control" id="submit_form" type="submit" value="Valider">
+	  </div>
+	</form>
+  </div>
 </div>
 {% endblock %}
 
+{% block javascript %}
+<script type="text/javascript" src="/js/creer_partie.js"></script>
+{% endblock %}

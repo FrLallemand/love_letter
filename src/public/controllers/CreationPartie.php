@@ -10,19 +10,26 @@ use models\Carte as Carte;
 class CreationPartie extends AbstractController{
 
 	public function formCreerPartie($request, $response, $args){
-		return $this->ci->view->render($response, 'creer_partie.html', [
-        ]);
+        $this->handle_session();
+        if($this->check_session()){
+            $url = $this->ci->router->pathFor('plateau');
+            return $response->withRedirect(($url), 200);
+        }
+        else{
+            return $this->ci->view->render($response, 'creer_partie.html', [
+            ]);
+        }
+
 	}
 
     public function creerPartie($request, $response, $args){
-        session_start();
-
+        $this->handle_session();
         $joueurs_maximum = $args['joueurs_maximum'];
         $nom_joueur =  $args['nom_joueur'];
 
         //on cherche si il y a une partie en attente de joueurs
         $partie_attente = Partie::where('joueurs_maximum', $joueurs_maximum)
-                        ->whereRaw('joueurs_actuel < joueurs_maximum')
+                        ->whereRaw('joueurs_presents < joueurs_maximum')
                         ->get()
                         ->first();
 
@@ -53,27 +60,20 @@ class CreationPartie extends AbstractController{
             $joueur = new Joueur();
             $joueur->idpartie = $id_partie;
             $joueur->nom = $nom_joueur;
+            $joueur->actions = array();
+            $joueur->notifications = array();
             $joueur->save();
 
             //On enregistre l'id du joueur dans la session de l'utilisateur
             $_SESSION['idjoueur'] = $joueur->idjoueur;
             $_SESSION['idpartie'] = $id_partie;
-                                  
-            $partie->joueurs_actuel++;
-            switch($partie->joueurs_actuel){
-            case 1:
-                $partie->joueur_1 = $joueur->idjoueur;
-                $partie->tour_de = 1;
-                break;
-            case 2:
-                $partie->joueur_2 = $joueur->idjoueur;
-                break;
-            case 3:
-                $partie->joueur_3 = $joueur->idjoueur;
-                break;
-            case 4:
-                $partie->joueur_4 = $joueur->idjoueur;
-                break;
+
+            $partie->joueurs_presents++;
+            $joueurs = $partie->joueurs;
+            $joueurs[] = $joueur->idjoueur;
+            $partie->joueurs = $joueurs;
+            if($partie->joueurs_presents == 1){
+                $partie->joueur_actuel = $joueur->idjoueur;
             }
             $partie->save();
             $status_nom = '';
@@ -87,6 +87,8 @@ class CreationPartie extends AbstractController{
 
     private function creerCartes($partie){
         $cartes = [];
+        $pioche = new Pioche();
+        $pioche->save();
         for($i = 0; $i < 16; $i++){
             if($i<5){
                 $c = new Carte();
@@ -120,19 +122,21 @@ class CreationPartie extends AbstractController{
                 $c = new Carte();
                 $c->setCarte(-1, "Princesse", "Je suis la princesse.", 8, '/images/Princesse.jpg');
             }
+            $c->pioche = $pioche->idpioche;
+            $c->save();
             $cartes[$i] = $c->idcarte;
         }
 
         //Mélager les 16 cartes
         shuffle($cartes);
-        $pioche = new Pioche();
         $pioche->setPioche($cartes);
         $partie->pioche = $pioche->idpioche;
-        
+
         //Retirer la premiere carte du jeu (-2 devient proprietaire de la carte, elle reste invisible aux joueurs)
         $c1 = Carte::where('idcarte', $pioche->carte_1)
             ->first();
         $c1->proprietaire = -2;
+        $c1->visible = true;
         $pioche->haut = 2;
 
         //Si la partie est à deux joueurs, on pioche 3 cartes et on les rend visibles (-2 devient proprietaire de la carte, elle devient visible)
@@ -146,7 +150,7 @@ class CreationPartie extends AbstractController{
 
             $c2->proprietaire = -2;
             $c2->visible = true;
-            
+
             $c3->proprietaire = -2;
             $c3->visible = true;
 

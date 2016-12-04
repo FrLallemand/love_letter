@@ -1,0 +1,56 @@
+/* #cartes_jouees{ */
+/* } */
+
+/* #mes_cartes{ */
+/*     /\* float: left; *\/ */
+/* } */
+
+#cartes_eliminees_container img{
+	max-width: 10%;
+	padding: 1px;
+}
+
+#cartes_jouees_container img{
+	max-width: 10%;
+	padding: 1px;
+}
+
+#cartes_jouees_container img:hover{
+	transform: scale(2.0);
+}
+
+#mes_cartes_container img{
+	max-width: 15%;
+	padding: 1px;
+}
+
+#mes_cartes_container img:hover{
+	transform: scale(1.2);
+}
+
+#modal_pretre .carte{
+	transform: scale(0.8);
+}
+
+.selected{
+	border: solid 5px black;
+}
+
+/* #mes_cartes img{ */
+/*     max-width: 200px; */
+/*     max-height: 200px; */
+/* } */
+
+/* #mes_cartes img:hover{ */
+/* 	width: 300px; */
+/*     max-height: 300px; */
+/* 	display:inline-block; */
+/*     position: relative; */
+/* } */
+
+/* .mes_cartes_selection{ */
+/* 	border: solid 5px black; */
+/* } */
+/* /\* #pioche{ *\/ */
+/*     float: left; */
+/* } */

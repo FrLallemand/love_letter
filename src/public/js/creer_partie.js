@@ -18,7 +18,8 @@ function creer_partie() {
 						window.location.replace('/partie/attente');
 					}else{
 						$("#nom_joueur_erreur").text(json.status_nom);
-					}}
+					}
+				}
 			});
 			
 		});
