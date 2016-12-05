@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4
+-- version 4.6.5.1
 -- https://www.phpmyadmin.net/
 --
 -- Client :  localhost
--- Généré le :  Mar 29 Novembre 2016 à 18:39
+-- Généré le :  Lun 05 Décembre 2016 à 09:37
 -- Version du serveur :  10.1.19-MariaDB
 -- Version de PHP :  7.0.13
 
@@ -28,12 +28,15 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `carte` (
   `idcarte` int(11) NOT NULL,
+  `pioche` int(11) NOT NULL,
   `proprietaire` int(11) NOT NULL,
   `nom` varchar(50) NOT NULL,
   `description` varchar(150) NOT NULL,
   `niveau` int(11) NOT NULL,
+  `played` tinyint(1) DEFAULT '0',
   `visible` tinyint(1) NOT NULL DEFAULT '0',
-  `chemin_image` varchar(100) NOT NULL
+  `chemin_image` varchar(100) NOT NULL,
+  `ordre` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -49,7 +52,8 @@ CREATE TABLE `joueur` (
   `actions` text NOT NULL,
   `notifications` text NOT NULL,
   `elimine` tinyint(1) NOT NULL DEFAULT '0',
-  `invulnerable` tinyint(1) NOT NULL DEFAULT '0'
+  `invulnerable` tinyint(1) NOT NULL DEFAULT '0',
+  `joue` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -68,7 +72,8 @@ CREATE TABLE `partie` (
   `updated_at` datetime NOT NULL,
   `created_at` datetime NOT NULL,
   `pioche` int(11) NOT NULL,
-  `finie` tinyint(1) NOT NULL DEFAULT '0'
+  `finie` tinyint(1) NOT NULL DEFAULT '0',
+  `vainqueur` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -95,7 +100,8 @@ CREATE TABLE `pioche` (
   `carte_13` int(11) NOT NULL DEFAULT '-1',
   `carte_14` int(11) NOT NULL DEFAULT '-1',
   `carte_15` int(11) NOT NULL DEFAULT '-1',
-  `carte_16` int(11) NOT NULL DEFAULT '-1'
+  `carte_16` int(11) NOT NULL DEFAULT '-1',
+  `cartes_max` int(11) DEFAULT '16'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -153,6 +159,3 @@ ALTER TABLE `pioche`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-"{\"source\":\"utilisation_baron\",\"content\":{\"joueur_source\":\"kh\",\"cartes_joueur\":[\"\\\/images\\\/Garde.jpg\"],\"niveau_joueur\":1,\"cartes_adversaire\":[\"\\\/images\\\/Garde.jpg\"],\"niveau_adversaire\":1,\"message\":\"\\u00c9galit\\u00e9\"}}"
-
-["source\":\"utilisation_baron\",\"content\":{\"joueur_source\":\"kh\",\"cartes_joueur\":[\"\\\/images\\\/Garde.jpg\"],\"niveau_joueur\":1,\"cartes_adversaire\":[\"\\\/images\\\/Garde.jpg\"],\"niveau_adversaire\":1,\"message\":\"\\u00c9galit\\u00e9\"}"]
