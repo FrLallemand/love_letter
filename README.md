@@ -21,5 +21,8 @@ L'accès se configure dans le fichier love_letter/conf/database.conf.ini, en pr�
 Les dépendances sont gérées grâce à composer [(site web)](https://getcomposer.org/).
 Dans le dossier love_letter/src, executez la commande suivante :
   	`composer install`
+Ou, si composer n'est pas installé sur votre système :
+	`php composer.phar install`
+
 
 L'url rewrite doit être activé sur le serveur. La racine du site (index.php) se trouve dans love_letter/src/public.
